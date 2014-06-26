@@ -2,6 +2,8 @@ package com.Saran.ribbit;
 
 import java.util.Locale;
 
+import com.parse.ParseUser;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -11,6 +13,7 @@ import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,11 +43,15 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		Intent loginIntent = new Intent(this,LoginActivity.class);
-		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(loginIntent);
-
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser==null) {
+			Intent loginIntent = new Intent(this, LoginActivity.class);
+			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(loginIntent);
+		}else{
+			Log.i("Saran", "Current user is "+currentUser.getUsername());
+		}
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
