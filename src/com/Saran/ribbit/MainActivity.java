@@ -43,9 +43,13 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		//If the user is not logged in, route to login activity
 		ParseUser currentUser = ParseUser.getCurrentUser();
+		
+		//check the user object is cached in or not
 		if (currentUser==null) {
 			Intent loginIntent = new Intent(this, LoginActivity.class);
+			//clear the task stack
 			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 			loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(loginIntent);

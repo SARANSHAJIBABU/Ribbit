@@ -56,11 +56,16 @@ public class LoginActivity extends Activity {
 					AlertDialog dialog = builder.create();
 					dialog.show();
 				}else{
+					
+					//use ParseUser class' static method to login using username and password
 					ParseUser.logInInBackground(username, password, new LogInCallback() {
 						
+						//if login is fine
 						@Override
 						public void done(ParseUser user, ParseException e) {
-							if(null == e){
+							if(null == e){//if no exception ie. login is ok
+								
+								///if login is fine, route to MainActivity, clear tasks and start new task
 								Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 								intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
