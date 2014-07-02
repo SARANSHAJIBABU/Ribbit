@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);   
 		
 		//If the user is not logged in, route to login activity
 		ParseUser currentUser = ParseUser.getCurrentUser();
