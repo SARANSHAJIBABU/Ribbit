@@ -21,5 +21,6 @@
     <string name="sign_up_error_title">Oops!!</string>
     <string name="login_error_message">Please enter a valid username, password</string>
     <string name="login_error_title">Oops!!</string>
+    <string name="action_logout">Logout</string>
 
 </resources>

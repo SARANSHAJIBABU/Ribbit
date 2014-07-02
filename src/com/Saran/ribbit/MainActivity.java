@@ -2,6 +2,8 @@ package com.Saran.ribbit;
 
 import java.util.Locale;
 
+import com.parse.ParseUser;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -45,11 +47,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		
 		//check the user object is cached in or not
 		if (currentUser==null) {
-			Intent loginIntent = new Intent(this, LoginActivity.class);
-			//clear the task stack
-			loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(loginIntent);
+			doLogin();
 		}else{
 			Log.i("Saran", "Current user is "+currentUser.getUsername());
 		}
@@ -88,6 +86,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		}
 	}
 
+	private void doLogin() {
+		Intent loginIntent = new Intent(this, LoginActivity.class);
+		//clear the task stack
+		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(loginIntent);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -104,6 +110,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
+		}else if(id == R.id.action_logout){
+			ParseUser.logOut();
+			this.doLogin();
 		}
 		return super.onOptionsItemSelected(item);
 	}
