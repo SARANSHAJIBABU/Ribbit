@@ -1,9 +1,5 @@
 package com.Saran.ribbit;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
