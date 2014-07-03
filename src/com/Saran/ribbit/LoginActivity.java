@@ -3,9 +3,11 @@ package com.Saran.ribbit;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.FeatureInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +27,10 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//To display progressbar spinner. It must be done before setContentView()
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		setContentView(R.layout.activity_login);
 		
 		mUserName = (EditText) findViewById(R.id.usernameLoginField);
@@ -57,6 +63,8 @@ public class LoginActivity extends Activity {
 					AlertDialog dialog = builder.create();
 					dialog.show();
 				}else{
+					//Show ProgressBar spinner
+					setProgressBarIndeterminateVisibility(true);
 					
 					//use ParseUser class' static method to login using username and password
 					ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -64,6 +72,10 @@ public class LoginActivity extends Activity {
 						//if login is fine
 						@Override
 						public void done(ParseUser user, ParseException e) {
+							
+							//Remove ProgressBar spinner
+							setProgressBarIndeterminateVisibility(false);
+
 							if(null == e){//if no exception ie. login is ok
 								
 								///if login is fine, route to MainActivity, clear tasks and start new task

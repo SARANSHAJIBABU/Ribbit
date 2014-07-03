@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,10 @@ public class SignUpActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//To display progressbar spinner. It must be done before setContentView()
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
+		
 		setContentView(R.layout.activity_sign_up);
 		
 		mUserName = (EditText) findViewById(R.id.UsernameSignupField);
@@ -46,6 +51,8 @@ public class SignUpActivity extends Activity {
 					AlertDialog dialog = builder.create();
 					dialog.show();
 				}else{
+					//Show ProgressBar spinner
+					setProgressBarIndeterminateVisibility(true);
 					
 					//create a new parse user if user input is fine
 					ParseUser newUser = new ParseUser();
@@ -57,6 +64,10 @@ public class SignUpActivity extends Activity {
 						
 						@Override
 						public void done(ParseException e) {
+							
+							//Remove ProgressBar spinner
+							setProgressBarIndeterminateVisibility(false);
+							
 							if(null==e){ //if no exception ie. signup is ok
 								
 								///if login is fine, route to MainActivity, clear tasks and start new task
