@@ -30,5 +30,11 @@
     <string name="friends_error_title">Oops</string>
     <string name="friends_error_message">Couldnt fetch friend\'s list</string>
     <string name="menu_camera_label">Camera</string>
+    <string-array name="camera_items">
+        <item >Take a photo</item>
+        <item >Take a video</item>
+        <item >Choose a photo</item>
+        <item >Choose a video</item>
+    </string-array>
 
 </resources>

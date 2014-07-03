@@ -1,9 +1,12 @@
 package com.Saran.ribbit;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +19,12 @@ import com.parse.ParseUser;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+	
+	public static final int CAPTURE_PHOTO_REQ_CODE = 0;
+	public static final int CAPTURE_VIDE0_REQ_CODE = 1;
+	public static final int CHOOSE_PHOTO_REQ_CODE = 2;
+	public static final int CHOOSE_VIDEO_REQ_CODE = 3;
+
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -24,6 +33,26 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	 * becomes too memory intensive, it may be best to switch to a
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
+	
+	private DialogInterface.OnClickListener mDialogListener = new DialogInterface.OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			switch(which){
+				case 0:
+					//Take picture
+					Intent photoTakingIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					startActivityForResult(photoTakingIntent, CAPTURE_PHOTO_REQ_CODE);
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+			}
+		}
+	};
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
@@ -112,6 +141,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}else if(id == R.id.action_edit_friends){
 			Intent editFriendsIntent = new Intent(this,EditFriendsActivity.class);
 			startActivity(editFriendsIntent);
+		}else if(id == R.id.action_camera){
+			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this); 
+			builder.setItems(R.array.camera_items, mDialogListener);		
+			AlertDialog dialog = builder.create();
+			dialog.show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
