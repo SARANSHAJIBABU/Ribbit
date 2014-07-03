@@ -192,6 +192,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					.setTabListener(this));
 		}
 	}
+	
+	@Override
+	protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(reqCode, resultCode, data);
+		if(resultCode == RESULT_OK){
+			//Add it to gallery
+			Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+			sendBroadcast(mediaScanIntent);
+		}else if(resultCode!=RESULT_CANCELED){
+			Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show();
+		}
+	}
+
 
 	private void doLogin() {
 		Intent loginIntent = new Intent(this, LoginActivity.class);
