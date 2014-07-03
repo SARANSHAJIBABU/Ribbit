@@ -1,11 +1,18 @@
 package com.Saran.ribbit;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -24,6 +32,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public static final int CAPTURE_VIDE0_REQ_CODE = 1;
 	public static final int CHOOSE_PHOTO_REQ_CODE = 2;
 	public static final int CHOOSE_VIDEO_REQ_CODE = 3;
+	
+	public static final int MEDIA_TYPE_IMAGE = 4;
+	public static final int MEDIA_TYPE_VIDEO = 5;
+	
+	private Uri mMediaUri;
 
 
 	/**
@@ -42,6 +55,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				case 0:
 					//Take picture
 					Intent photoTakingIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					
+					//uri to store the image
+					mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+					if(mMediaUri==null){
+						Toast.makeText(MainActivity.this,R.string.external_storage_error_message, Toast.LENGTH_SHORT).show();
+					}
+					photoTakingIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
 					startActivityForResult(photoTakingIntent, CAPTURE_PHOTO_REQ_CODE);
 					break;
 				case 1:
@@ -51,6 +71,69 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				case 3:
 					break;
 			}
+		}
+		
+		private Uri getOutputMediaFileUri(int mediaType){
+	
+			if(isExternalStorageAvailable()){
+				//1. Get external storage directory
+				//2. Create a subdirectory
+				//3. Create a file name
+				//4. Create a file
+				//5. Return file's Uri
+				
+				//1. Get external storage directory 
+						//-> get external storage dir of type pictures
+						//-> create a new file using the above details and appname
+				String appName = getString(R.string.app_name);
+				File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),appName);
+//				Log.d("Saran", "External Storage Dir path for images "+ Uri.fromFile(mediaStorageDir));
+
+				
+				//2. Create a subdirectory
+						//Check if a directory exists at the above file path, if no, create one
+				if(!mediaStorageDir.exists()){
+					if(!mediaStorageDir.mkdirs()){
+						//error occured
+						return null;
+					}
+				}
+				
+				//3. Create a file name
+				//4. Create a file
+				File mediaFile = null;
+				Date now = new Date();
+				
+				//create timestamp to uniguely name an image
+				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
+				String path = mediaStorageDir.getPath() + File.separator;
+				
+				//if it is an image add path+_IMG+timestamp+jpg
+				if(mediaType == MEDIA_TYPE_IMAGE){
+					mediaFile = new File(path +"_IMG"+timeStamp+".jpg");
+					
+				//if it is an video add path+_VID+timestamp+mp4
+				}else if(mediaType == MEDIA_TYPE_VIDEO){
+					mediaFile = new File(path+"_VID"+timeStamp+".mp4");
+				}else{
+					return null;
+				}
+//				Log.d("Saran", "Captured file dir"+ Uri.fromFile(mediaFile));
+				
+				//create Uri from the file and return
+				return Uri.fromFile(mediaFile);
+			}else{
+				return null;
+			}
+		}
+		
+		private boolean isExternalStorageAvailable(){
+		String externalStorageState = Environment.getExternalStorageState();
+			
+			if(externalStorageState.equals(Environment.MEDIA_MOUNTED)){
+				return true;
+			}
+			return false;
 		}
 	};
 	SectionsPagerAdapter mSectionsPagerAdapter;
@@ -73,7 +156,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		if (currentUser==null) {
 			doLogin();
 		}else{
-			Log.i("Saran", "Current user is "+currentUser.getUsername());
+			//Log.i("Saran", "Current user is "+currentUser.getUsername());
 		}
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -109,7 +192,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					.setTabListener(this));
 		}
 	}
-
 
 	private void doLogin() {
 		Intent loginIntent = new Intent(this, LoginActivity.class);
