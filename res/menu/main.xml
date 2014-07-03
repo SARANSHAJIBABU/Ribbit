@@ -7,7 +7,8 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-    <item android:id="@+id/action_logout" android:title="@string/action_logout"></item>
-    <item android:id="@+id/action_edit_friends" android:title="@string/action_edit_friends"></item>
+    
+    <item android:id="@+id/action_edit_friends" android:title="@string/action_edit_friends"></item><item android:id="@+id/action_logout" android:title="@string/action_logout"></item>
+    <item android:id="@+id/action_camera" android:title="@string/menu_camera_label" android:icon="@drawable/ic_action_camera" android:showAsAction="always"></item>
 
 </menu>

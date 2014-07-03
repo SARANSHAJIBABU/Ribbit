@@ -32,7 +32,7 @@ public class FriendsListFragment extends ListFragment {
 	}
 	
 	@Override
-	public void onResume() {
+	public void onResume() { 
 		super.onResume();
 		getActivity().setProgressBarIndeterminateVisibility(true);
 		mCurrentUser = ParseUser.getCurrentUser();

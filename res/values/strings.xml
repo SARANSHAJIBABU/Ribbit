@@ -29,5 +29,6 @@
     <string name="edit_friends_error_message">Sorry some error occured!! Please trey again</string>
     <string name="friends_error_title">Oops</string>
     <string name="friends_error_message">Couldnt fetch friend\'s list</string>
+    <string name="menu_camera_label">Camera</string>
 
 </resources>
