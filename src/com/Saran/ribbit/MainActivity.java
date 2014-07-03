@@ -60,11 +60,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
 					if(mMediaUri==null){
 						Toast.makeText(MainActivity.this,R.string.external_storage_error_message, Toast.LENGTH_SHORT).show();
+					}else{
+						photoTakingIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+						startActivityForResult(photoTakingIntent, CAPTURE_PHOTO_REQ_CODE);
 					}
-					photoTakingIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
-					startActivityForResult(photoTakingIntent, CAPTURE_PHOTO_REQ_CODE);
 					break;
 				case 1:
+					Intent videoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+					mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
+					if(mMediaUri==null){
+						Toast.makeText(MainActivity.this,R.string.external_storage_error_message, Toast.LENGTH_SHORT).show();
+					}else{
+						videoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+						videoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
+						videoIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+						startActivityForResult(videoIntent, CAPTURE_VIDE0_REQ_CODE);
+					}
 					break;
 				case 2:
 					break;
@@ -110,15 +121,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				
 				//if it is an image add path+_IMG+timestamp+jpg
 				if(mediaType == MEDIA_TYPE_IMAGE){
-					mediaFile = new File(path +"_IMG"+timeStamp+".jpg");
+					mediaFile = new File(path +"IMG_"+timeStamp+".jpg");
 					
 				//if it is an video add path+_VID+timestamp+mp4
 				}else if(mediaType == MEDIA_TYPE_VIDEO){
-					mediaFile = new File(path+"_VID"+timeStamp+".mp4");
+					mediaFile = new File(path+"VID_"+timeStamp+".mp4");
 				}else{
 					return null;
 				}
-//				Log.d("Saran", "Captured file dir"+ Uri.fromFile(mediaFile));
+				Log.d("Saran", "Captured file dir"+ Uri.fromFile(mediaFile));
 				
 				//create Uri from the file and return
 				return Uri.fromFile(mediaFile);
