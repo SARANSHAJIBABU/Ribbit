@@ -30,13 +30,18 @@
     <string name="friends_error_title">Oops</string>
     <string name="friends_error_message">Couldnt fetch friend\'s list</string>
     <string name="menu_camera_label">Camera</string>
+
     <string-array name="camera_items">
-        <item >Take a photo</item>
-        <item >Take a video</item>
-        <item >Choose a photo</item>
-        <item >Choose a video</item>
+        <item>Take a photo</item>
+        <item>Take a video</item>
+        <item>Choose a photo</item>
+        <item>Choose a video</item>
     </string-array>
+
     <string name="external_storage_error_message">Sorry. Error occured while accesiing external storage of device</string>
     <string name="general_error">General error occured</string>
+    <string name="video_size_warning">Make sure the selected video is less than 10MB</string>
+    <string name="title_activity_recipients">RecipientsActivity</string>
+    <string name="recipients_empty_text">There are no receipients added</string>
 
 </resources>
