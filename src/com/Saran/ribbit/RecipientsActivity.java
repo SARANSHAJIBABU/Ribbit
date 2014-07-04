@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ public class RecipientsActivity extends ListActivity {
 	private ParseUser mCurrentUser;
 	private ParseRelation<ParseUser> mFriendsRelation;
 	private List<ParseUser> mFriends;
+	private MenuItem mSendButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +73,27 @@ public class RecipientsActivity extends ListActivity {
 		});
 		
 	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		//Make send button visible when a friend from listview is selected
+		if(l.getCheckedItemCount()>0){
+			mSendButton.setVisible(true);
+		}else{
+			mSendButton.setVisible(false);
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.recipients, menu);
+		
+		//store to set visibility in onListItemClickedß
+		mSendButton = menu.getItem(0);
 		return true;
 	}
 
@@ -86,7 +103,7 @@ public class RecipientsActivity extends ListActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_send) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

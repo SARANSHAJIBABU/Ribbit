@@ -55,7 +55,7 @@
         <activity
             android:name="com.Saran.ribbit.RecipientsActivity"
             android:label="@string/title_activity_recipients"
-            android:parentActivityName="com.Saran.ribbit.MainActivity" >
+            android:parentActivityName="com.Saran.ribbit.MainActivity" android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.Saran.ribbit.MainActivity" />
