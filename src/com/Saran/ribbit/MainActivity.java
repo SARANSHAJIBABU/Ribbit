@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.Saran.ribbit.constants.ParseConstants;
 import com.parse.ParseUser;
 
 
@@ -33,8 +34,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	
 	public static final int CAPTURE_PHOTO_REQ_CODE = 0;
 	public static final int CAPTURE_VIDE0_REQ_CODE = 1;
-	public static final int CHOOSE_PHOTO_REQ_CODE = 2;
-	public static final int CHOOSE_VIDEO_REQ_CODE = 3;
+	public static final int PICK_PHOTO_REQ_CODE = 2;
+	public static final int PICK_VIDEO_REQ_CODE = 3;
 	
 	public static final int MEDIA_TYPE_IMAGE = 4;
 	public static final int MEDIA_TYPE_VIDEO = 5;
@@ -92,14 +93,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					//Choose image				
 					Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
 					choosePhotoIntent.setType("image/*");
-					startActivityForResult(choosePhotoIntent, CHOOSE_PHOTO_REQ_CODE);
+					startActivityForResult(choosePhotoIntent, PICK_PHOTO_REQ_CODE);
 					break;
 				case 3:
 					//Choose image				
 					Intent chooseVideoIntent = new Intent(Intent.ACTION_GET_CONTENT);
 					chooseVideoIntent.setType("video/*");
 					Toast.makeText(MainActivity.this, getString(R.string.video_size_warning), Toast.LENGTH_SHORT).show();
-					startActivityForResult(chooseVideoIntent, CHOOSE_VIDEO_REQ_CODE);
+					startActivityForResult(chooseVideoIntent, PICK_VIDEO_REQ_CODE);
 					break;
 			}
 		}
@@ -228,16 +229,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onActivityResult(int reqCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(reqCode, resultCode, data);
+		String fileType = "";
 		if(resultCode == RESULT_OK){
 			
-			if(reqCode==CHOOSE_PHOTO_REQ_CODE||reqCode==CHOOSE_VIDEO_REQ_CODE){
+			if(reqCode==CAPTURE_PHOTO_REQ_CODE||reqCode==PICK_PHOTO_REQ_CODE){
+				fileType = ParseConstants.FILE_TYPE_IMAGE;
+			}else{
+				fileType = ParseConstants.FILE_TYPE_VIDEO;
+			}
+			
+			if(reqCode==PICK_PHOTO_REQ_CODE||reqCode==PICK_VIDEO_REQ_CODE){
 				if(data==null){
 					Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show();
 				}else{
 					mMediaUri = data.getData();
 				}
 				
-				if(reqCode==CHOOSE_VIDEO_REQ_CODE){
+				if(reqCode==PICK_VIDEO_REQ_CODE){
 					int fileSize = 0;
 					InputStream inputStream = null;
 					try {
@@ -262,8 +270,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 						Toast.makeText(this, R.string.general_error, Toast.LENGTH_SHORT).show();
 						return;
 					}
-					
-					
 
 				}
 			}else{
@@ -277,6 +283,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 			Intent recipientsIntent = new Intent(MainActivity.this, RecipientsActivity.class);
 			recipientsIntent.setData(mMediaUri);
+			recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE, fileType);
 			startActivity(recipientsIntent);
 
 		}else if(resultCode!=RESULT_CANCELED){

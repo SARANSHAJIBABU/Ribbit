@@ -8,12 +8,12 @@ import java.io.InputStream;
 
 import org.apache.commons.io.IOUtils;
 
-import com.Saran.ribbit.constants.ParseConstants;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
+
+import com.Saran.ribbit.constants.ParseConstants;
 
 public class FileHelper {
 	

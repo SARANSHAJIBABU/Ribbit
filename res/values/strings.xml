@@ -43,5 +43,7 @@
     <string name="video_size_warning">Make sure the selected video is less than 10MB</string>
     <string name="title_activity_recipients">RecipientsActivity</string>
     <string name="recipients_empty_text">There are no receipients added</string>
+    <string name="file_select_error">The file that you selected cant be sent. Please select another file</string>
+    <string name="message_send">Message send</string>
 
 </resources>
