@@ -44,15 +44,7 @@ public class InboxFragment extends ListFragment {
 				
 				if(e==null){
 					mMessages = messages;
-					String[] messagesFrom = new String[messages.size()];
-					int i=0;
-					for(ParseObject message: mMessages){
-						messagesFrom[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
-						i++;
-					}
-					
-					ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1
-							, messagesFrom);
+					MessageAdapter adapter = new MessageAdapter(getListView().getContext(), R.layout.message_item, mMessages);
 					setListAdapter(adapter);
 				}else{
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()); 
