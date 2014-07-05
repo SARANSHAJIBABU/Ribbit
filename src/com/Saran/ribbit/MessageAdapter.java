@@ -65,5 +65,12 @@ public class MessageAdapter extends ArrayAdapter<ParseObject> {
 		ImageView inboxItemImageView;
 		TextView inboxItemTextView;
 	}
+	
+	//This is to refresh the datastructure associated to list and scrollview retain its position.
+	public void refill(List<ParseObject> messages) {
+		mMessages.clear();
+		mMessages.addAll(messages);
+		notifyDataSetChanged();
+	}
 
 }

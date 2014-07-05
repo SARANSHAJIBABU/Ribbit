@@ -1,11 +1,14 @@
 package com.Saran.ribbit;
 
-import com.squareup.picasso.Picasso;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 public class ImageViewActivity extends Activity {
 	
@@ -20,5 +23,14 @@ public class ImageViewActivity extends Activity {
 		Uri uri = getIntent().getData();
 		Picasso.with(ImageViewActivity.this).load(uri.toString()).into(imageview);
 		
+		//Timer to close the activity after 10s, if it is still open
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				finish();		
+			}
+		}, 10*1000);
 	}
 }

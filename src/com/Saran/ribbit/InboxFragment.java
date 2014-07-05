@@ -47,8 +47,14 @@ public class InboxFragment extends ListFragment {
 				
 				if(e==null){
 					mMessages = messages;
-					MessageAdapter adapter = new MessageAdapter(getListView().getContext(), R.layout.message_item, mMessages);
-					setListAdapter(adapter);
+					if(getListView().getAdapter()==null){
+						//if no adapter, create a new adapter
+						MessageAdapter adapter = new MessageAdapter(getListView().getContext(), R.layout.message_item, mMessages);
+						setListAdapter(adapter);
+					}else{
+						//If there is an adapter, just refill its datastructure
+						((MessageAdapter)getListView().getAdapter()).refill(mMessages);
+					}
 				}else{
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()); 
 					builder.setMessage(R.string.inbox_error_message);
