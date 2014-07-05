@@ -1,5 +1,6 @@
 package com.Saran.ribbit;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -32,6 +33,10 @@ public class LoginActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		
 		setContentView(R.layout.activity_login);
+		
+		//hide ActionBar from login screen
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 		
 		mUserName = (EditText) findViewById(R.id.usernameLoginField);
 		mPassword = (EditText) findViewById(R.id.passwordLoginField);

@@ -5,7 +5,7 @@
     <string name="tab_section1">Inbox</string>
     <string name="tab_section2">Friends</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="hello_world">Hello world!</string>
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
