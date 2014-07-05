@@ -1,5 +1,6 @@
 package com.Saran.ribbit;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -38,7 +39,7 @@ public class InboxFragment extends ListFragment {
 		getActivity().setProgressBarIndeterminateVisibility(true);
 		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
 		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
-		query.addAscendingOrder(ParseConstants.KEY_CREATED_AT);
+		query.addDescendingOrder(ParseConstants.KEY_CREATED_AT);
 		query.findInBackground(new FindCallback<ParseObject>() {
 			
 			@Override
@@ -85,6 +86,23 @@ public class InboxFragment extends ListFragment {
 			intent.setData(uri);
 			intent.setType("video/*");
 			startActivity(intent);
-			}
+		}
+		
+		List<String> recipientList = message.getList(ParseConstants.KEY_RECIPIENT_IDS);
+		if(recipientList.size()==1){
+			//if only one recipient, directly delete from background
+			//else delete the user's id from recipients list
+			message.deleteInBackground();
+		}else{
+			//create list and put recipient to remove. removeall() requires a collection as arguement
+			List<String> toRemove = new ArrayList<String>();
+			toRemove.add(message.getString(ParseConstants.KEY_SENDER_ID));
+			
+			//remove id from message locally
+			message.removeAll(ParseConstants.KEY_RECIPIENT_IDS, toRemove);
+			
+			//save the change made in ParseObject in backend
+			message.saveInBackground();
+		}
 	}
 }
