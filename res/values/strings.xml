@@ -47,5 +47,6 @@
     <string name="message_send">Message send</string>
     <string name="inbox_error_message">Couldnt retrieve message. Some error occured</string>
     <string name="inbox_error_title">Oops</string>
+    <string name="title_activity_image_view">ImageViewActivity</string>
 
 </resources>

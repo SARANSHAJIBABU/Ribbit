@@ -3,16 +3,19 @@ package com.Saran.ribbit;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.Saran.ribbit.constants.ParseConstants;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -57,6 +60,25 @@ public class InboxFragment extends ListFragment {
 				}
 
 			}
-		});
+		}); 
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		ParseObject message = mMessages.get(position);
+		ParseFile messageFile = message.getParseFile(ParseConstants.KEY_FILE);
+		Uri uri = Uri.parse(messageFile.getUrl());
+		
+		if(message.getString(ParseConstants.KEY_FILE_TYPE).equals(ParseConstants.FILE_TYPE_IMAGE)){
+			Intent intent = new Intent(getActivity(),ImageViewActivity.class);
+			intent.setData(uri);
+			startActivity(intent);
+		}else{
+			Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+			intent.setData(uri);
+			intent.setType("video/*");
+			startActivity(intent);
+			}
 	}
 }
