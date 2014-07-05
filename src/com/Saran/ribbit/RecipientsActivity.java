@@ -122,7 +122,7 @@ public class RecipientsActivity extends ListActivity {
 			if(message == null){
 				AlertDialog.Builder builder = new AlertDialog.Builder(RecipientsActivity.this);
 				builder.setMessage(R.string.file_select_error);
-				builder.setTitle("Oops");
+				builder.setTitle(R.string.inbox_error_title);
 				
 				AlertDialog dialog = builder.create();
 				dialog.show();
@@ -145,7 +145,7 @@ public class RecipientsActivity extends ListActivity {
 				}else{
 					AlertDialog.Builder builder = new AlertDialog.Builder(RecipientsActivity.this);
 					builder.setMessage(R.string.general_error);
-					builder.setTitle("Oops");
+					builder.setTitle(R.string.inbox_error_title);
 					
 					AlertDialog dialog = builder.create();
 					dialog.show();

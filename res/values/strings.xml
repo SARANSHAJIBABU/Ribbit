@@ -45,5 +45,7 @@
     <string name="recipients_empty_text">There are no receipients added</string>
     <string name="file_select_error">The file that you selected cant be sent. Please select another file</string>
     <string name="message_send">Message send</string>
+    <string name="inbox_error_message">Couldnt retrieve message. Some error occured</string>
+    <string name="inbox_error_title">Oops</string>
 
 </resources>
